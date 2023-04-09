@@ -1,18 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import SignIn from "components/SignIn/SignIn";
 
 const Login = () => {
-  const navigate = useNavigate();
   return (
     <>
-      <h2>Login</h2>
-      <buttom
-        type="buttom"
-        onClick={() => {
-          navigate("/schedule");
-        }}
-      >
-        To Schedule
-      </buttom>
+      <SignIn />
     </>
   );
 };

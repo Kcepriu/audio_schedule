@@ -1,19 +1,70 @@
-import { useNavigate } from "react-router-dom";
+import { useRef, useState } from 'react';
+import Draggable from 'react-draggable';
+
+import { allDays } from 'constants/days';
+import generateSchedule from 'services/generateSchedule';
+import changeSchedule from 'services/changeSchedule';
+
+import RowsSchedule from 'components/RowsSchedule/RowsSchedule';
+
+import { Table, ContainerTable, Card, Tbody } from './Schedule.styled';
+import { Button } from '@mui/material';
 
 const Schedule = () => {
-  const navigate = useNavigate();
+  const [isMovedElement, setIsMovedElement] = useState(false);
+  const [schedule, setSchedule] = useState(() => generateSchedule());
+
+  const nodeRef = useRef(null);
+
+  // * Handler
+  const hadlerMouseMove = event => {
+    console.log(event.target);
+  };
+
+  const handlerStartMoved = event => {
+    setIsMovedElement(true);
+    console.log('onStart');
+  };
+
+  const handlerStopMoved = event => {
+    setIsMovedElement(false);
+    console.log('onStop');
+  };
+
+  const handlerNewTrac = () => {
+    console.log('handlerNewTrac');
+    setSchedule(prev => changeSchedule(prev, 21, 1, 'Test music'));
+  };
 
   return (
     <>
-      <h2>Schedule</h2>
-      <buttom
-        type="buttom"
-        onClick={() => {
-          navigate("/login");
-        }}
-      >
-        To login
-      </buttom>
+      <Button onClick={handlerNewTrac}>Test</Button>
+
+      <ContainerTable>
+        <Table>
+          <thead>
+            <tr>
+              <th colSpan="2">Час</th>
+
+              {allDays.map((element, index) => {
+                return <th key={index}>{element.name}</th>;
+              })}
+            </tr>
+          </thead>
+          <Tbody>
+            <RowsSchedule schedule={schedule} isMovedElement={isMovedElement} />
+          </Tbody>
+        </Table>
+        <Draggable
+          bounds="parent"
+          nodeRef={nodeRef}
+          onStart={handlerStartMoved}
+          onStop={handlerStopMoved}
+          // onDrag={e => console.log('onDrag', e)}
+        >
+          <Card ref={nodeRef}>test</Card>
+        </Draggable>
+      </ContainerTable>
     </>
   );
 };
