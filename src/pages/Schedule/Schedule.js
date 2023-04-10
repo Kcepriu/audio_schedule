@@ -16,30 +16,21 @@ const Schedule = () => {
 
   const nodeRef = useRef(null);
 
-  // * Handler
-  const hadlerMouseMove = event => {
-    console.log(event.target);
-  };
-
-  const handlerStartMoved = event => {
-    setIsMovedElement(true);
-    console.log('onStart');
-  };
-
-  const handlerStopMoved = event => {
-    setIsMovedElement(false);
-    console.log('onStop');
-  };
-
-  const handlerNewTrac = () => {
-    console.log('handlerNewTrac');
-    setSchedule(prev => changeSchedule(prev, 21, 1, 'Test music'));
-  };
+  // // * Handler
+  // const hadlerMouseMove = event => {
+  //   console.log(event.target);
+  // };
+  // const handlerStartMoved = event => {
+  //   setIsMovedElement(true);
+  //   console.log('onStart');
+  // };
+  // const handlerStopMoved = event => {
+  //   setIsMovedElement(false);
+  //   console.log('onStop');
+  // };
 
   return (
     <>
-      <Button onClick={handlerNewTrac}>Test</Button>
-
       <ContainerTable>
         <Table>
           <thead>
@@ -52,10 +43,14 @@ const Schedule = () => {
             </tr>
           </thead>
           <Tbody>
-            <RowsSchedule schedule={schedule} isMovedElement={isMovedElement} />
+            <RowsSchedule
+              schedule={schedule}
+              setSchedule={setSchedule}
+              isMovedElement={isMovedElement}
+            />
           </Tbody>
         </Table>
-        <Draggable
+        {/* <Draggable
           bounds="parent"
           nodeRef={nodeRef}
           onStart={handlerStartMoved}
@@ -63,7 +58,7 @@ const Schedule = () => {
           // onDrag={e => console.log('onDrag', e)}
         >
           <Card ref={nodeRef}>test</Card>
-        </Draggable>
+        </Draggable> */}
       </ContainerTable>
     </>
   );

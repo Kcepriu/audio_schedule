@@ -1,13 +1,34 @@
+import { useState } from 'react';
+
 import { TableRow, TableCell } from './RowsSchedule.styled';
+import ListPlaylists from 'components/ListPlaylists/ListPlaylists';
+
+import changeSchedule from 'services/changeSchedule';
 
 //MUI
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import ListSubheader from '@mui/material/ListSubheader';
-import MenuItem from '@mui/material/MenuItem';
+import Popover from '@mui/material/Popover';
 
-const RowsSchedule = ({ schedule, isMovedElement }) => {
+const RowsSchedule = ({ schedule, setSchedule, isMovedElement }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handlerChosePlaylist = ({ chosePlayList, indexRow, indexColumn }) => {
+    setSchedule(prev =>
+      changeSchedule(prev, indexRow, indexColumn, chosePlayList)
+    );
+    setAnchorEl(null);
+  };
+
+  const handleShowPopover = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClosePopover = () => {
+    setAnchorEl(null);
+  };
+
+  const isOpenPopover = Boolean(anchorEl);
+  const idPopover = isOpenPopover ? 'simple-popover' : undefined;
+
   return (
     <>
       {schedule.map(({ id, hour, minutes, days }, indexRow) => (
@@ -27,30 +48,40 @@ const RowsSchedule = ({ schedule, isMovedElement }) => {
                 className="cellDay"
                 data-index-row={indexRow}
                 data-index-column={indexColumn}
+                data-play-list={data}
+                data-hour={hour}
+                data-minutes={minutes}
+                data-num-day={indexColumn}
+                onClick={handleShowPopover}
 
                 // onMouseOut={handlerTest}
                 // onMouseOver={handlerTest}
               >
                 {data}
-                {/* <FormControl>
-                  <InputLabel htmlFor="grouped-select">Grouping</InputLabel>
-                  <Select defaultValue="" id="grouped-select" label="Grouping">
-                    <MenuItem value="">
-                      <em>{data}</em>
-                    </MenuItem>
-                    <ListSubheader>Category 1</ListSubheader>
-                    <MenuItem value={1}>Option 1</MenuItem>
-                    <MenuItem value={2}>Option 2</MenuItem>
-                    <ListSubheader>Category 2</ListSubheader>
-                    <MenuItem value={3}>Option 3</MenuItem>
-                    <MenuItem value={4}>Option 4</MenuItem>
-                  </Select>
-                </FormControl> */}
               </TableCell>
             );
           })}
         </TableRow>
       ))}
+
+      <Popover
+        id={idPopover}
+        open={isOpenPopover}
+        anchorEl={anchorEl}
+        onClose={handleClosePopover}
+        width="100%"
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        {isOpenPopover && (
+          <ListPlaylists
+            dataCell={{ ...anchorEl.dataset }}
+            handlerChosePlaylist={handlerChosePlaylist}
+          />
+        )}
+      </Popover>
     </>
   );
 };

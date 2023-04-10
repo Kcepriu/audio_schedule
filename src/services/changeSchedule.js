@@ -1,9 +1,7 @@
-const copyObject = oldObj => {
-  return [...oldObj];
-};
+import cloneDeep from 'lodash.clonedeep';
+
 const changeSchedule = (oldSchedule, row, column, data) => {
-  const newObj = copyObject(oldSchedule);
-  console.log(newObj);
+  const newObj = cloneDeep(oldSchedule);
 
   newObj[row].days[column].data = data;
 
