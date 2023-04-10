@@ -1,33 +1,14 @@
-import { useRef, useState } from 'react';
-import Draggable from 'react-draggable';
+import { useState } from 'react';
 
 import { allDays } from 'constants/days';
 import generateSchedule from 'services/generateSchedule';
-import changeSchedule from 'services/changeSchedule';
 
 import RowsSchedule from 'components/RowsSchedule/RowsSchedule';
 
-import { Table, ContainerTable, Card, Tbody } from './Schedule.styled';
-import { Button } from '@mui/material';
+import { Table, ContainerTable, Tbody } from './Schedule.styled';
 
 const Schedule = () => {
-  const [isMovedElement, setIsMovedElement] = useState(false);
   const [schedule, setSchedule] = useState(() => generateSchedule());
-
-  const nodeRef = useRef(null);
-
-  // // * Handler
-  // const hadlerMouseMove = event => {
-  //   console.log(event.target);
-  // };
-  // const handlerStartMoved = event => {
-  //   setIsMovedElement(true);
-  //   console.log('onStart');
-  // };
-  // const handlerStopMoved = event => {
-  //   setIsMovedElement(false);
-  //   console.log('onStop');
-  // };
 
   return (
     <>
@@ -43,22 +24,9 @@ const Schedule = () => {
             </tr>
           </thead>
           <Tbody>
-            <RowsSchedule
-              schedule={schedule}
-              setSchedule={setSchedule}
-              isMovedElement={isMovedElement}
-            />
+            <RowsSchedule schedule={schedule} setSchedule={setSchedule} />
           </Tbody>
         </Table>
-        {/* <Draggable
-          bounds="parent"
-          nodeRef={nodeRef}
-          onStart={handlerStartMoved}
-          onStop={handlerStopMoved}
-          // onDrag={e => console.log('onDrag', e)}
-        >
-          <Card ref={nodeRef}>test</Card>
-        </Draggable> */}
       </ContainerTable>
     </>
   );

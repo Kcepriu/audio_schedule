@@ -8,7 +8,7 @@ import changeSchedule from 'services/changeSchedule';
 //MUI
 import Popover from '@mui/material/Popover';
 
-const RowsSchedule = ({ schedule, setSchedule, isMovedElement }) => {
+const RowsSchedule = ({ schedule, setSchedule }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handlerChosePlaylist = ({ chosePlayList, indexRow, indexColumn }) => {
@@ -53,9 +53,6 @@ const RowsSchedule = ({ schedule, setSchedule, isMovedElement }) => {
                 data-minutes={minutes}
                 data-num-day={indexColumn}
                 onClick={handleShowPopover}
-
-                // onMouseOut={handlerTest}
-                // onMouseOver={handlerTest}
               >
                 {data}
               </TableCell>
@@ -64,6 +61,7 @@ const RowsSchedule = ({ schedule, setSchedule, isMovedElement }) => {
         </TableRow>
       ))}
 
+      {/* TODO Add width Popover */}
       <Popover
         id={idPopover}
         open={isOpenPopover}
