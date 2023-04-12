@@ -29,6 +29,8 @@ const RowsSchedule = ({ schedule, setSchedule }) => {
   const isOpenPopover = Boolean(anchorEl);
   const idPopover = isOpenPopover ? 'simple-popover' : undefined;
 
+  //namePlaylist
+
   return (
     <>
       {schedule.map(({ id, hour, minutes, days }, indexRow) => (
@@ -41,20 +43,24 @@ const RowsSchedule = ({ schedule, setSchedule }) => {
 
           <TableCell className="cellMinute">{minutes}</TableCell>
 
-          {days.map(({ id, data }, indexColumn) => {
+          {days.map(({ id, namePlaylist }, indexColumn) => {
             return (
               <TableCell
                 key={id}
                 className="cellDay"
                 data-index-row={indexRow}
                 data-index-column={indexColumn}
-                data-play-list={data}
+                data-name-play-list={namePlaylist.name}
+                data-color-play-list={namePlaylist.color}
                 data-hour={hour}
                 data-minutes={minutes}
                 data-num-day={indexColumn}
                 onClick={handleShowPopover}
+                style={{
+                  backgroundColor: namePlaylist.color,
+                }}
               >
-                {data}
+                {namePlaylist.name}
               </TableCell>
             );
           })}
@@ -67,16 +73,17 @@ const RowsSchedule = ({ schedule, setSchedule }) => {
         open={isOpenPopover}
         anchorEl={anchorEl}
         onClose={handleClosePopover}
-        width="100%"
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
         }}
+        // sx={{ backgroundColor: 'red' }}
       >
         {isOpenPopover && (
           <ListPlaylists
             dataCell={{ ...anchorEl.dataset }}
             handlerChosePlaylist={handlerChosePlaylist}
+            wifthCell={anchorEl.offsetWidth}
           />
         )}
       </Popover>

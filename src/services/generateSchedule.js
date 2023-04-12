@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { allDays, typeCells, startHourWork } from 'constants/days';
+import { allDays, startHourWork } from 'constants/days';
 
 const generatorAllTime = () => {
   const today = new Date();
@@ -38,8 +38,10 @@ const generateSchedule = () => {
       days: allDays.map(element => {
         return {
           id: nanoid(),
-          type: typeCells.day,
-          data: '',
+          namePlaylist: {
+            name: '',
+            color: '#ffffff',
+          },
         };
       }),
     };
