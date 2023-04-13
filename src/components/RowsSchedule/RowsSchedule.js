@@ -2,13 +2,14 @@ import { useState } from 'react';
 
 import { TableRow, TableCell } from './RowsSchedule.styled';
 import ListPlaylists from 'components/ListPlaylists/ListPlaylists';
+import CardPlayList from 'components/CardPlayList/CardPlayList';
 
 import changeSchedule from 'services/changeSchedule';
 
 //MUI
 import Popover from '@mui/material/Popover';
 
-const RowsSchedule = ({ schedule, setSchedule }) => {
+const RowsSchedule = ({ schedule, setSchedule, refTbody }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handlerChosePlaylist = ({ chosePlayList, indexRow, indexColumn }) => {
@@ -28,8 +29,6 @@ const RowsSchedule = ({ schedule, setSchedule }) => {
 
   const isOpenPopover = Boolean(anchorEl);
   const idPopover = isOpenPopover ? 'simple-popover' : undefined;
-
-  //namePlaylist
 
   return (
     <>
@@ -57,10 +56,20 @@ const RowsSchedule = ({ schedule, setSchedule }) => {
                 data-num-day={indexColumn}
                 onClick={handleShowPopover}
                 style={{
-                  backgroundColor: namePlaylist.color,
+                  backgroundColor: !namePlaylist.name ? 'red' : 'white',
                 }}
               >
-                {namePlaylist.name}
+                {/* {namePlaylist.name} */}
+
+                {namePlaylist.startPlayLists && (
+                  <CardPlayList
+                    colorCard={namePlaylist.color}
+                    text={namePlaylist.name}
+                    hightPlayList={namePlaylist.hightPlayList}
+                    heightTbody={refTbody.current.offsetHeight}
+                    countRow={schedule.length}
+                  />
+                )}
               </TableCell>
             );
           })}
@@ -77,13 +86,11 @@ const RowsSchedule = ({ schedule, setSchedule }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        // sx={{ backgroundColor: 'red' }}
       >
         {isOpenPopover && (
           <ListPlaylists
             dataCell={{ ...anchorEl.dataset }}
             handlerChosePlaylist={handlerChosePlaylist}
-            wifthCell={anchorEl.offsetWidth}
           />
         )}
       </Popover>

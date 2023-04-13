@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { allDays } from 'constants/days';
+
 import generateSchedule from 'services/generateSchedule';
 
 import RowsSchedule from 'components/RowsSchedule/RowsSchedule';
 
-import { Table, ContainerTable, Tbody } from './Schedule.styled';
+import { Table, ContainerTable, Tbody, TableCell } from './Schedule.styled';
 
 const Schedule = () => {
   const [schedule, setSchedule] = useState(() => generateSchedule());
+  const refTbody = useRef(null);
 
   return (
     <>
@@ -16,15 +18,21 @@ const Schedule = () => {
         <Table>
           <thead>
             <tr>
-              <th colSpan="2">Час</th>
+              <TableCell colSpan="2">Час</TableCell>
 
               {allDays.map((element, index) => {
-                return <th key={index}>{element.name}</th>;
+                return <TableCell key={index}>{element.name}</TableCell>;
               })}
             </tr>
           </thead>
-          <Tbody>
-            <RowsSchedule schedule={schedule} setSchedule={setSchedule} />
+
+          <Tbody ref={refTbody}>
+            <RowsSchedule
+              schedule={schedule}
+              setSchedule={setSchedule}
+              refTbody={refTbody}
+              on
+            />
           </Tbody>
         </Table>
       </ContainerTable>

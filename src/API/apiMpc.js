@@ -1,7 +1,3 @@
-export const getListPlaylists_ = () => {
-  return ['day1', 'day2', 'day3', 'night1', 'night2', 'night3'];
-};
-
 export const getListPlaylists = () => {
   return [
     { key: 'day1', name: 'day1', color: '#ab47bc' },

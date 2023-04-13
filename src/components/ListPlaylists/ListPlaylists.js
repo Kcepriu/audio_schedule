@@ -14,11 +14,9 @@ import Divider from '@mui/material/Divider';
 
 const allPlayLists = getListPlaylists();
 
-const ListPlaylists = ({ dataCell, wifthCell, handlerChosePlaylist }) => {
-  console.log('dataCell', dataCell.namePlayList);
-
+const ListPlaylists = ({ dataCell, handlerChosePlaylist }) => {
   return (
-    <Container minWidth={wifthCell} pd="sm">
+    <Container pd="sm">
       <Typography variant="h4">{allDays[dataCell.numDay].name}</Typography>
       <Divider />
       <Typography variant="h6">{`Початок: ${dataCell.hour.padStart(

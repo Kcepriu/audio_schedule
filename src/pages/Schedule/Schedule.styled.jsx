@@ -9,20 +9,20 @@ export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
 
-  & th {
+  /* & th {
     padding: 10px;
     border: 1px solid #2a2a2a;
-  }
+  } */
 `;
 
 export const Tbody = styled.tbody`
   /* position: relative; */
 `;
 
-export const Card = styled.div`
-  position: absolute;
-  display: block;
-  width: calc((100%-20px) / 7 - 30px);
-  height: 20px;
-  background-color: red;
+export const TableCell = styled.th`
+  padding: 10px;
+
+  text-align: center;
+  /* border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0; */
 `;
