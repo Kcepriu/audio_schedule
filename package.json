@@ -1,6 +1,5 @@
 {
   "name": "audio_schedule",
-  "homepage": "https://Kcepriu.github.io/audio_schedule/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -22,7 +21,7 @@
     "react-draggable": "^4.4.5",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
-    "react-scripts": "^2.1.3",
+    "react-scripts": "5.0.1",
     "styled-components": "^5.3.9",
     "web-vitals": "^2.1.4"
   },
