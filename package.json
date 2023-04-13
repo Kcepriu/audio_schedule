@@ -1,6 +1,8 @@
 {
   "name": "audio_schedule",
   "version": "0.1.0",
+  "homepage": "https://Kcepriu.github.io/audio_schedule/",
+
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
