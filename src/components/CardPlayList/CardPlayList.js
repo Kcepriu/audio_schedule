@@ -1,21 +1,49 @@
-import { MyCard } from './CardPlayList.styled';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import CssBaseline from '@mui/material/CssBaseline';
 
-const CardPlayList = ({
-  colorCard,
-  text,
-  hightPlayList,
-  heightTbody,
-  countRow,
-}) => {
+import { formatTime, addMinutes } from 'services/timeFunction';
+
+const CardPlayList = ({ namePlaylist, heightTbody, countRow, startTime }) => {
+  const endTime = addMinutes(
+    startTime.hour,
+    startTime.minutes,
+    namePlaylist.hightPlayList
+  );
+
   return (
-    <MyCard
+    <Box
+      component="div"
       style={{
-        backgroundColor: colorCard,
-        height: `${(heightTbody / countRow) * hightPlayList - 8}px `,
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: namePlaylist.color,
+        width: `calc(100% - 8px)`,
+        height: `${
+          (heightTbody / countRow) * namePlaylist.hightPlayList - 8
+        }px `,
+        top: '4px',
+        left: '4px',
+
+        borderRadius: '20px',
+        zIndex: 999,
+        pointerEvents: 'none',
       }}
     >
-      {text}
-    </MyCard>
+      <Typography variant="h4">{namePlaylist.name}</Typography>
+
+      <Divider flexItem sx={{ fullWidth: 1, color: 'Red' }} />
+
+      <CssBaseline />
+      <Typography variant="h6" sx={{ marginTop: 2 }}>
+        {formatTime(startTime.hour, startTime.minutes)}-
+        {formatTime(endTime.hour, endTime.minutes)}
+      </Typography>
+    </Box>
   );
 };
 

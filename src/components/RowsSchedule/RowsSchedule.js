@@ -63,11 +63,10 @@ const RowsSchedule = ({ schedule, setSchedule, refTbody }) => {
 
                 {namePlaylist.startPlayLists && (
                   <CardPlayList
-                    colorCard={namePlaylist.color}
-                    text={namePlaylist.name}
-                    hightPlayList={namePlaylist.hightPlayList}
+                    namePlaylist={namePlaylist}
                     heightTbody={refTbody.current.offsetHeight}
                     countRow={schedule.length}
+                    startTime={{ hour, minutes }}
                   />
                 )}
               </TableCell>

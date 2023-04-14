@@ -1,16 +1,20 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { allDays } from 'constants/days';
 
-import generateSchedule from 'services/generateSchedule';
+import { loadSchedule, saveSchedule } from 'services/functionFromSchedule';
 
 import RowsSchedule from 'components/RowsSchedule/RowsSchedule';
 
 import { Table, ContainerTable, Tbody, TableCell } from './Schedule.styled';
 
 const Schedule = () => {
-  const [schedule, setSchedule] = useState(() => generateSchedule());
+  const [schedule, setSchedule] = useState(() => loadSchedule());
   const refTbody = useRef(null);
+
+  useEffect(() => {
+    saveSchedule(schedule);
+  }, [schedule]);
 
   return (
     <>

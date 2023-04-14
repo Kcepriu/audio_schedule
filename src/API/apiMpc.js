@@ -9,5 +9,6 @@ export const getListPlaylists = () => {
     { key: 'night3', name: 'night3', color: '#c2185b' },
 
     { key: 'hipHop', name: 'hipHop', color: '#aed581' },
+    { key: 'defaulPlaylists', name: 'defaulPlaylists', color: '#f9a825' },
   ];
 };

@@ -9,14 +9,20 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import StarBorder from '@mui/icons-material/StarBorder';
-import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
 
 const allPlayLists = getListPlaylists();
 
 const ListPlaylists = ({ dataCell, handlerChosePlaylist }) => {
   return (
-    <Container pd="sm">
+    <Box
+      component="div"
+      sx={{
+        borderRadius: '20px',
+        padding: '4px 16px 4px 16px',
+      }}
+    >
       <Typography variant="h4">{allDays[dataCell.numDay].name}</Typography>
       <Divider />
       <Typography variant="h6">{`Початок: ${dataCell.hour.padStart(
@@ -24,7 +30,7 @@ const ListPlaylists = ({ dataCell, handlerChosePlaylist }) => {
         '0'
       )}:${dataCell.minutes.padStart(2, '0')}`}</Typography>
 
-      <List>
+      <List disablePadding={true} dense>
         {allPlayLists.map(playList => {
           return (
             <ListItem
@@ -56,7 +62,7 @@ const ListPlaylists = ({ dataCell, handlerChosePlaylist }) => {
           );
         })}
       </List>
-    </Container>
+    </Box>
   );
 };
 
