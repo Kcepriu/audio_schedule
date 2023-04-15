@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/audio_schedule/static/css/main.bd7e7da5.css",
-    "main.js": "/audio_schedule/static/js/main.0204e32f.js",
+    "main.js": "/audio_schedule/static/js/main.477dd10d.js",
     "static/media/roboto-all-500-normal.woff": "/audio_schedule/static/media/roboto-all-500-normal.0ab669b7a0d19b178f57.woff",
     "static/media/roboto-all-700-normal.woff": "/audio_schedule/static/media/roboto-all-700-normal.a457fde362a540fcadff.woff",
     "static/media/roboto-all-400-normal.woff": "/audio_schedule/static/media/roboto-all-400-normal.c5d001fa922fa66a147f.woff",
@@ -36,10 +36,10 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/audio_schedule/static/media/roboto-greek-ext-700-normal.bd9854c751441ccc1a70.woff2",
     "index.html": "/audio_schedule/index.html",
     "main.bd7e7da5.css.map": "/audio_schedule/static/css/main.bd7e7da5.css.map",
-    "main.0204e32f.js.map": "/audio_schedule/static/js/main.0204e32f.js.map"
+    "main.477dd10d.js.map": "/audio_schedule/static/js/main.477dd10d.js.map"
   },
   "entrypoints": [
     "static/css/main.bd7e7da5.css",
-    "static/js/main.0204e32f.js"
+    "static/js/main.477dd10d.js"
   ]
 }
