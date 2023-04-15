@@ -34,9 +34,9 @@ const CardPlayList = ({ namePlaylist, heightTbody, countRow, startTime }) => {
         pointerEvents: 'none',
       }}
     >
-      <Typography variant="h4">{namePlaylist.name}</Typography>
+      <Typography variant="h4">{namePlaylist.description}</Typography>
 
-      <Divider flexItem sx={{ fullWidth: 1, color: 'Red' }} />
+      <Divider flexItem sx={{ fullWidth: 1 }} />
 
       <CssBaseline />
       <Typography variant="h6" sx={{ marginTop: 2 }}>

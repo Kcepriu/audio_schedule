@@ -56,7 +56,7 @@ const ListPlaylists = ({ dataCell, handlerChosePlaylist }) => {
                   {playList.name === dataCell.namePlayList && <StarBorder />}
                 </ListItemIcon>
 
-                <ListItemText primary={playList.name} />
+                <ListItemText primary={playList.description} />
               </ListItemButton>
             </ListItem>
           );

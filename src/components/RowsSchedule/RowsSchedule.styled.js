@@ -20,6 +20,7 @@ export const TableCell = styled.td`
     border-right: 1px solid #e0e0e0;
     width: calc((100%-20px) / 7);
     font-size: 10px;
+    max-height: 14px;
   }
   &.cellMinute {
     font-size: 10px;

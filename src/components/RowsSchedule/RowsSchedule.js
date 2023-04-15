@@ -55,13 +55,8 @@ const RowsSchedule = ({ schedule, setSchedule, refTbody }) => {
                 data-minutes={minutes}
                 data-num-day={indexColumn}
                 onClick={handleShowPopover}
-                style={{
-                  backgroundColor: !namePlaylist.name ? 'red' : 'white',
-                }}
               >
-                {/* {namePlaylist.name} */}
-
-                {namePlaylist.startPlayLists && (
+                {namePlaylist.startPlayLists && refTbody.current && (
                   <CardPlayList
                     namePlaylist={namePlaylist}
                     heightTbody={refTbody.current.offsetHeight}
@@ -75,7 +70,6 @@ const RowsSchedule = ({ schedule, setSchedule, refTbody }) => {
         </TableRow>
       ))}
 
-      {/* TODO Add width Popover */}
       <Popover
         id={idPopover}
         open={isOpenPopover}

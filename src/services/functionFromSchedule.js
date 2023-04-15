@@ -1,37 +1,34 @@
 import { nanoid } from 'nanoid';
+import cloneDeep from 'lodash.clonedeep';
 
-import { allDays, startHourWork } from 'constants/days';
-import { formatTime } from './timeFunction';
+import { getListPlaylists } from 'API/apiMpc';
+import { allDays } from 'constants/days';
+import changeSchedule from './changeSchedule';
+import {
+  saveScheduleToStorage,
+  loadScheduleFromStorage,
+} from './scheduleLoadSave';
 
-const generatorAllTime = () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const result = [];
-  let seconds = 0;
+import { generatorAllTime } from './timeFunction';
 
-  while (seconds < 86400) {
-    const hour = today.getHours();
-    const minutes = today.getMinutes();
-    if (hour === 0 || hour >= startHourWork - 1) {
-      result.push({
-        hour,
-        minutes,
-      });
-    }
+const allPlayLists = getListPlaylists();
 
-    seconds += 15 * 60;
-    today.setSeconds(today.getSeconds() + 15 * 60);
-  }
-
-  return result;
+export const copySchedule = schedule => {
+  return cloneDeep(schedule);
 };
 
-export const generateSchedule = () => {
+export const generateEmptySchedule = () => {
+  //Generate Empty Schedule
   const allTime = generatorAllTime();
   const schedule = [];
+  const defaultPlayList = allPlayLists.find(
+    element => element.name === 'defaulPlaylists'
+  );
 
   let index = 0;
+
   for (const time of allTime) {
+    const numRow = index;
     const row = {
       id: nanoid(),
       hour: time.hour,
@@ -39,13 +36,15 @@ export const generateSchedule = () => {
       index,
 
       days: allDays.map(element => {
-        return {
+        const dataCell = {
           id: nanoid(),
-          namePlaylist: {
-            name: '',
-            color: '#ffffff',
-          },
+          namePlaylist: cloneDeep(defaultPlayList),
         };
+
+        dataCell.namePlaylist.hightPlayList = numRow === 0 ? 64 : 0;
+        dataCell.namePlaylist.startPlayLists = numRow === 0;
+
+        return dataCell;
       }),
     };
     schedule.push(row);
@@ -55,82 +54,37 @@ export const generateSchedule = () => {
   return schedule;
 };
 
-export const loadSchedule = () => {
-  const schedule = generateSchedule();
+export const loadSchedule = schedule => {
+  let newSchedule = copySchedule(schedule);
+
   //Load data fdrom JSON
-  const loadSchedule = load('ScheduleMPC');
+  const loadSaveSchedule = loadScheduleFromStorage();
 
   //Add to schedule
-  for (const day in loadSchedule) {
-    console.log(typeof day, loadSchedule[day]);
+  for (const day in loadSaveSchedule) {
+    for (const time in loadSaveSchedule[day]) {
+      //Find PlayList
+      const namePlayList = loadSaveSchedule[day][time];
+      const playList = allPlayLists.find(
+        element => element.name === namePlayList
+      );
 
-    for (const time in loadSchedule[day]) {
-      console.log(time, loadSchedule[day][time]);
+      // find where put new playlisr
+      const [hour, minutes] = time.split(':');
+      const column = Number(day);
 
-      //day - в число
-
-      //time - роззкласти на час і хвилини
-
-      //   schedule.find(element => {
-      //     return element.hour === 9 && element.minutes === 45;
-      //   })
-
-      // changeSchedule = (oldSchedule, row, column, newPlayLists)
+      const row = newSchedule.find(element => {
+        return (
+          element.hour === Number(hour) && element.minutes === Number(minutes)
+        );
+      }).index;
+      newSchedule = changeSchedule(newSchedule, row, column, playList);
     }
   }
 
-  console.log(loadSchedule);
-
-  return schedule;
-};
-
-const createJsonSchedule = schedule => {
-  const arrayTime = [];
-  for (let i = 0; i < 7; i++) {
-    arrayTime[i] = schedule
-      .filter(({ days }) => {
-        return days[i].namePlaylist.startPlayLists;
-      })
-      .map(({ days, hour, minutes }) => {
-        return { hour, minutes, namePlaylist: days[i].namePlaylist.name };
-      })
-      .reduce(
-        (previousValue, element) => {
-          return (previousValue = {
-            ...previousValue,
-            [`${formatTime(element.hour, element.minutes)}`]:
-              element.namePlaylist,
-          });
-        },
-        { '00:00': 'defaulPlaylists' }
-      );
-  }
-
-  const objResult = arrayTime.reduce((previousValue, element, index) => {
-    return { ...previousValue, [index]: element };
-  }, {});
-
-  // save('ScheduleMPC', objResult);
-};
-
-const save = (key, value) => {
-  try {
-    const serializedState = JSON.stringify(value);
-    localStorage.setItem(key, serializedState);
-  } catch (error) {
-    console.error('Set state error: ', error.message);
-  }
-};
-
-const load = key => {
-  try {
-    const serializedState = localStorage.getItem(key);
-    return serializedState === null ? undefined : JSON.parse(serializedState);
-  } catch (error) {
-    console.error('Get state error: ', error.message);
-  }
+  return newSchedule;
 };
 
 export const saveSchedule = schedule => {
-  createJsonSchedule(schedule);
+  saveScheduleToStorage(schedule);
 };
